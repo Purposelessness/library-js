@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  ul
+    table
+      tr
+        th Title
+        th Author
+        th Year
+      for book, i in books
+        tr
+          td
+            a(href='/books/' + book.isbn)= book.title
+          td= book.author
+          td= book.year
