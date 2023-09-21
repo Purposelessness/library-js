@@ -1,0 +1,23 @@
+{
+  "type": "Map",
+  "value": [
+    [
+      0,
+      {
+        "title": "The little prince",
+        "author": "Antoine de Saint-Exupéry",
+        "year": "1943",
+        "reader": null
+      }
+    ],
+    [
+      1,
+      {
+        "title": "Crime and Punishment",
+        "author": "Fyodor Dostoevsky",
+        "year": "1866",
+        "reader": null
+      }
+    ]
+  ]
+}
