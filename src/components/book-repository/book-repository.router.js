@@ -13,6 +13,7 @@ class BookRepositoryRouter {
     router.route('/repository/:isbn(\\d+)').get(this.bookController.getBook);
     router.route('/repository').post(this.bookController.addBook);
     router.route('/repository/:isbn(\\d+)').delete(this.bookController.deleteBook);
+    router.route('/repository/save').post(this.bookController.saveBooks);
     return router;
   }
 }

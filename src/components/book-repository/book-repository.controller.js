@@ -11,7 +11,7 @@ class BookRepositoryController {
     try {
       res.status(200).send(await this.bookRepository.getAll());
     } catch (err) {
-      console.error(
+      console.warn(
           `[BookRepository][Controller] Error while getting books: ${err.message}`);
       next(err);
     }
@@ -45,7 +45,19 @@ class BookRepositoryController {
       await this.bookRepository.delete(isbn);
       res.status(204).send();
     } catch (err) {
-      console.warn(`[BookRepository][Controller] Error while deleting book: ${err.message}`);
+      console.warn(
+          `[BookRepository][Controller] Error while deleting book: ${err.message}`);
+      next(err);
+    }
+  };
+
+  saveBooks = async (req, res, next) => {
+    try {
+      await this.bookRepository.save();
+      res.status(204).send();
+    } catch (err) {
+      console.warn(
+          `[BookRepository][Controller] Error while saving books: ${err.message}`);
       next(err);
     }
   };
