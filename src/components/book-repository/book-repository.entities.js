@@ -1,12 +1,9 @@
 export {Book};
 
 class Book {
-  static isbn = 0;
-
   constructor(title, author, year) {
     this.title = title;
     this.author = author;
-    this.isbn = Book.isbn++;
     this.year = year;
     this.reader = null;
   }
@@ -24,5 +21,11 @@ class Book {
 
   isAvailable() {
     return this.reader === null;
+  }
+
+  isValid() {
+    return typeof this.title === 'string' && this.title.length > 0 &&
+        typeof this.author === 'string' && this.author.length > 0 &&
+        typeof this.year === 'string' && this.year.length > 0;
   }
 }
