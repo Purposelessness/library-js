@@ -1,5 +1,4 @@
 import path from 'path';
-import { fileURLToPath } from 'url';
 
 import express from 'express';
 
@@ -7,9 +6,8 @@ import morgan from 'morgan';
 import createError from 'http-errors';
 import cookieParser from 'cookie-parser';
 
+import {__dirname} from './config.js';
 import backendRoutes from './loaders/backend_routes.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
