@@ -9,11 +9,11 @@ class BookRepositoryRouter {
 
   getRouter() {
     const router = express.Router();
-    router.route('/repository').get(this.bookController.getBooks);
-    router.route('/repository/:isbn(\\d+)').get(this.bookController.getBook);
-    router.route('/repository').post(this.bookController.addBook);
-    router.route('/repository/:isbn(\\d+)').delete(this.bookController.deleteBook);
-    router.route('/repository/save').post(this.bookController.saveBooks);
+    router.route('/').get(this.bookController.getBooks);
+    router.route('/:isbn(\\d+)').get(this.bookController.getBook);
+    router.route('/').post(this.bookController.addBook);
+    router.route('/:isbn(\\d+)').delete(this.bookController.deleteBook);
+    router.route('/save').post(this.bookController.saveBooks);
     return router;
   }
 }

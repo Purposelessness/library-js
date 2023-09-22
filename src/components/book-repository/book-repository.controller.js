@@ -9,7 +9,7 @@ class BookRepositoryController {
 
   getBooks = async (req, res, next) => {
     try {
-      res.status(200).send(await this.bookRepository.getAll());
+      res.status(200).send(this.bookRepository.toJson());
     } catch (err) {
       console.warn(
           `[BookRepository][Controller] Error while getting books: ${err.message}`);

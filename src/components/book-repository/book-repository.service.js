@@ -39,10 +39,6 @@ class BookRepository {
     return this.data.get(isbn);
   };
 
-  getAll = () => {
-    return [...this.data.values()];
-  };
-
   delete = (isbn) => {
     if (typeof isbn !== 'number') {
       throw new Error(500, 'ISBN is not a number');
