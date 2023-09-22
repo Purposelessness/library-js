@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 
 import {__dirname} from './config.js';
 import backendRoutes from './loaders/backend_routes.js';
+import frontendRoutes from './loaders/frontend_routes.js';
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(cookieParser());
 // process public files
 app.use(express.static(path.join(__dirname, 'public')));
 
+frontendRoutes(app);
 backendRoutes(app);
 
 // catch 404 and forward to error handler
