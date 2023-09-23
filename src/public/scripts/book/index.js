@@ -1,39 +1,44 @@
-/*
-Create request to /book/repository and render the response in the table.
-/book/repository returns a JSON array of books type of Book.
-Handle errors.
-Request should be sent when the page is loaded asynchronically.
- */
-
-import {reviver} from '../utility/json.js';
+import WebService from './web-service.js';
+import TableService from './table-service.js';
 
 const bookTable = document.getElementById('book-table');
 
-const bookRepositoryUrl = '/book/repository';
-const bookRepositoryRequest = new XMLHttpRequest();
-bookRepositoryRequest.open('GET', bookRepositoryUrl);
-bookRepositoryRequest.responseType = 'json';
-bookRepositoryRequest.onload = () => {
-  const books_json = bookRepositoryRequest.response;
-  console.log(books_json);
-  if (books_json === null || Object.keys(books_json).length === 0) {
-    console.info('Library is empty');
-    return;
-  }
-  const books = new Map(books_json);
-  if (books) {
-    console.log(books);
-    for (const book of books.values()) {
-      const row = bookTable.insertRow();
-      row.insertCell().innerText = book.title;
-      row.insertCell().innerText = book.author;
-      row.insertCell().innerText = book.year;
-    }
-  } else {
-    console.error('Json parse error');
-  }
-};
-bookRepositoryRequest.onerror = () => {
-  console.error('Error while getting books from repository');
-};
-bookRepositoryRequest.send();
+const webService = new WebService();
+const tableService = new TableService(bookTable);
+const _ = webService.getBooksFromRepository(tableService.renderTable,
+    console.error);
+
+const addBookPopup = document.getElementById('add-book-popup-container');
+
+const showAddBookPopupButton = document.getElementById(
+    'show-add-book-popup-button');
+showAddBookPopupButton.addEventListener('click', () => {
+  const addBookPopup = document.getElementById('add-book-popup-container');
+  addBookPopup.classList.remove('hidden');
+});
+
+function closeAddBookPopup() {
+  const addBookPopup = document.getElementById('add-book-popup-container');
+  addBookPopup.classList.add('hidden');
+}
+
+const closeAddBookPopupButton = document.getElementById(
+    'close-add-book-popup-button');
+closeAddBookPopupButton.addEventListener('click', async () => {
+  closeAddBookPopup();
+});
+
+const addBookForm = document.getElementById(
+    'add-book-form');
+addBookForm.addEventListener('submit', async () => {
+  console.log('Submit add book popup button is clicked');
+  const title = document.getElementById('add-book-title').value;
+  const author = document.getElementById('add-book-author').value;
+  const year = document.getElementById('add-book-year').value;
+  const book = {
+    title: title, author: author, year: year,
+  };
+  await webService.addBookToRepository(book, async () => {
+    console.log('Book is added');
+  }, console.error);
+});

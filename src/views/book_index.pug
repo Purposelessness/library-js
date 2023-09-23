@@ -1,16 +1,40 @@
 extends layout
 
+block header
+  link(rel='stylesheet', href='/stylesheets/book/style.css')
+
+block outer
+  div(class='form-popup-container hidden' id='add-book-popup-container')
+    form(class='form-popup' id='add-book-form')
+        label Add Book
+
+        div(class='form-group')
+          label(for='book-title') Title
+          input(type='text' name='book-title' placeholder='Enter Title' id='add-book-title' required)
+
+          label(for='book-author') Author
+          input(type='text' name='book-author' placeholder='Enter Author' id='add-book-author' required)
+
+          label(for='book-year') Year
+          input(type='number' name='book-year' placeholder='Enter Year' id='add-book-year' required)
+
+        button(type='submit' class='form-button' id='submit-add-book-popup-button') Add
+        button(type='button' class='form-button cancel' id='close-add-book-popup-button') Close
+
+  button(class='show-popup' id='show-add-book-popup-button') Add Book
+
 block content
-  ul
-    table(style='width:100%', id='book-table', border='1')
+  table(id='book-table', border='1')
+    tr
+      th Title
+      th Author
+      th Year
+    for book, i in []
       tr
-        th Title
-        th Author
-        th Year
-      for book, i in []
-        tr
-          td
-            a(href='/books/' + book.isbn)= book.title
-          td= book.author
-          td= book.year
+        td
+          a(href='/books/' + book.isbn)= book.title
+        td= book.author
+        td= book.year
+
+block scripts
   script(src='/scripts/book/index.js' type='module')
