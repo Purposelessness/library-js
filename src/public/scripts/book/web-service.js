@@ -55,4 +55,19 @@ export default class WebService {
       onError(error);
     });
   };
+
+  deleteBookFromRepository = (isbn, onSuccess, onError) => {
+    const url = `${bookRepositoryUrl}/${isbn}`;
+    return fetch(url, {
+      method: 'DELETE',
+    }).then(response => {
+      console.debug(
+          `DELETE ${bookRepositoryUrl}/${isbn}: ${response.status}, ${response.statusText}`);
+      if (response.status === 204) {
+        onSuccess();
+      } else {
+        onError();
+      }
+    });
+  };
 }

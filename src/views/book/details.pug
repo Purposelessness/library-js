@@ -1,0 +1,15 @@
+extends ../layout
+
+block header
+  link(rel='stylesheet', href='/stylesheets/book/details.css')
+
+block content
+  span(id='isbn')= isbn
+  div(id='book-details-container')
+    b(id='book-title') Title
+    span(id='book-author') Author
+    span(id='book-year') Year
+    button(id='delete-book-button') Delete
+
+block scripts
+  script(src='/scripts/book/details.js' type='module')
