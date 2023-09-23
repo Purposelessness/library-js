@@ -1,16 +1,19 @@
 const bookRepositoryUrl = '/api/book-repository';
 
 export default class WebService {
-  getBooksFromRepository = (onSuccess, onError) => {
-    return fetch(bookRepositoryUrl, {
+  getBooksFromRepository = (
+      onSuccess, onError, sortKey = null, sortDirection = null) => {
+    const url = sortKey === null && sortDirection === null ?
+        bookRepositoryUrl :
+        `${bookRepositoryUrl}?sortKey=${sortKey}&sortDirection=${sortDirection}`;
+    return fetch(url, {
       method: 'GET',
     }).then(response => response.json()).then(data => {
       if (data === null || Object.keys(data).length === 0) {
         console.info('Library is empty');
         return;
       }
-      const books = new Map(data);
-      onSuccess(books);
+      onSuccess(data);
     }).catch(error => {
       console.error('Error while getting books from repository');
       onError(error);
@@ -18,7 +21,8 @@ export default class WebService {
   };
 
   getBookFromRepository = (isbn, onSuccess, onError) => {
-    return fetch(`${bookRepositoryUrl}/${isbn}`, {
+    const url = `${bookRepositoryUrl}/${isbn}`;
+    return fetch(url, {
       method: 'GET',
     }).then(response => response.json()).then(data => {
       if (data === null || Object.keys(data).length === 0) {
