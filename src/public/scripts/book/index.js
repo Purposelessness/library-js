@@ -1,12 +1,10 @@
 import AddBookFormController from './add-book-form-controller.js';
-import TableService from './table-service.js';
+import TableController from './table-controller.js';
 import WebService from './web-service.js';
 
 const webService = new WebService();
 
-const tableService = new TableService(document);
+const tableController = new TableController(document, webService);
 const addBookFormController = new AddBookFormController(document, webService);
 
-const _ = webService.getBooksFromRepository(tableService.renderTable,
-    console.error);
-
+const _ = tableController.renderTableAsync();
