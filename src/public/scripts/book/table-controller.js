@@ -1,7 +1,7 @@
 import Sortable from '../elements/sortable.js';
 
 export default class TableController {
-  constructor(document, webService) {
+  constructor(webService) {
     this.bookTable = document.getElementById('book-table');
 
     this.sortables = this.createSortables();
@@ -20,13 +20,24 @@ export default class TableController {
     return sortables;
   }
 
-  createOnSortListener(document) {
+  createOnSortListener() {
     document.addEventListener('sort', async (event) => {
-      await this.sortBooksAsync(event.detail.field, event.detail.direction);
+      if (event.detail.direction === 'none') {
+        await this.renderTableAsync();
+      } else {
+        await this.sortBooksAsync(event.detail.key, event.detail.direction);
+      }
     });
   }
 
+  clearTable() {
+    while (this.bookTable.rows.length > 1) {
+      this.bookTable.deleteRow(1);
+    }
+  }
+
   async renderTableAsync() {
+    this.clearTable();
     const fillTable = (books) => {
       for (const book of books.values()) {
         const row = this.bookTable.insertRow();
@@ -38,15 +49,9 @@ export default class TableController {
     await this.webService.getBooksFromRepository(fillTable, console.error);
   }
 
-  clearTable() {
-    while (this.bookTable.rows.length > 2) {
-      this.bookTable.deleteRow(1);
-    }
-  }
-
-  async sortBooksAsync(field, direction) {
+  async sortBooksAsync(key, direction) {
     this.clearTable();
-    console.log(`Sorting by ${field} in ${direction}`);
+    console.log(`Sorting by ${key} in ${direction}`);
     const fillTable = (books) => {
       for (const book of books.values()) {
         const row = this.bookTable.insertRow();
@@ -56,6 +61,6 @@ export default class TableController {
       }
     };
     await this.webService.getBooksFromRepository(fillTable, console.error,
-        field, direction);
+        key, direction);
   }
 }
