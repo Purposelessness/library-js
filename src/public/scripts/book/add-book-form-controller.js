@@ -1,5 +1,5 @@
 export default class AddBookFormController {
-  constructor(document, webService) {
+  constructor(webService) {
     this.popupContainer = document.getElementById('add-book-popup-container');
     this.form = document.getElementById('add-book-form');
 
