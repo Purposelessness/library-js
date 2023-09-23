@@ -1,6 +1,6 @@
 export default class TableService {
-  constructor(bookTable) {
-    this.bookTable = bookTable;
+  constructor(document) {
+    this.bookTable = document.getElementById('book-table');
   }
 
   renderTable = (books) => {
