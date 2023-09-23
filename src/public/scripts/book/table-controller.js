@@ -22,11 +22,7 @@ export default class TableController {
 
   createOnSortListener() {
     document.addEventListener('sort', async (event) => {
-      if (event.detail.direction === 'none') {
-        await this.renderTableAsync();
-      } else {
-        await this.sortBooksAsync(event.detail.key, event.detail.direction);
-      }
+      await this.renderTableAsync(event.detail.key, event.detail.direction);
     });
   }
 
@@ -36,23 +32,18 @@ export default class TableController {
     }
   }
 
-  async renderTableAsync() {
-    this.clearTable();
-    const fillTable = (books) => {
-      for (const book of books.values()) {
-        const row = this.bookTable.insertRow();
-        row.insertCell().innerText = book.title;
-        row.insertCell().innerText = book.author;
-        row.insertCell().innerText = book.year;
+  async renderTableAsync(sortKey = null, sortDirection = null) {
+    if (sortKey !== null && sortDirection !== null) {
+      if (sortDirection === 'none') {
+        sortKey = null;
+        sortDirection = null;
+      } else {
+        console.log(`Sorting by ${sortKey} in ${sortDirection}`);
       }
-    };
-    await this.webService.getBooksFromRepository(fillTable, console.error);
-  }
+    }
 
-  async sortBooksAsync(key, direction) {
-    this.clearTable();
-    console.log(`Sorting by ${key} in ${direction}`);
     const fillTable = (books) => {
+      this.clearTable();
       for (const book of books.values()) {
         const row = this.bookTable.insertRow();
         row.insertCell().innerText = book.title;
@@ -61,6 +52,6 @@ export default class TableController {
       }
     };
     await this.webService.getBooksFromRepository(fillTable, console.error,
-        key, direction);
+        sortKey, sortDirection);
   }
 }
