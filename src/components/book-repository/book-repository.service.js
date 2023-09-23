@@ -25,7 +25,8 @@ class BookRepository {
       throw new Error(400, 'Invalid request body');
     }
 
-    this.data.set(BookRepository.isbn++, book);
+    book.isbn = BookRepository.isbn++;
+    this.data.set(book.isbn, book);
     console.log(`[BookRepository] Book added: ${book.title}`);
     return book;
   };

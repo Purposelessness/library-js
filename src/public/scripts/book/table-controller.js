@@ -46,7 +46,12 @@ export default class TableController {
       this.clearTable();
       for (const book of books.values()) {
         const row = this.bookTable.insertRow();
-        row.insertCell().innerText = book.title;
+
+        const titleLink = document.createElement('a');
+        titleLink.href = `/book/${book.isbn}`;
+        titleLink.innerText = book.title;
+        row.insertCell().appendChild(titleLink);
+
         row.insertCell().innerText = book.author;
         row.insertCell().innerText = book.year;
       }

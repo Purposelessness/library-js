@@ -2,6 +2,7 @@ export {Book};
 
 class Book {
   constructor(title, author, year) {
+    this.isbn = null;
     this.title = title;
     this.author = author;
     this.year = year;
