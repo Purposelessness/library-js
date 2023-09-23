@@ -26,9 +26,15 @@ block outer
 block content
   table(id='book-table', border='1')
     tr
-      th Title
-      th Author
-      th Year
+      th(class='sortable' id='title-sort' data-sort='title')
+        i(class='sort-icon fa-solid fa-sort')
+        span Title
+      th(class='sortable' id='author-sort' data-sort='author')
+        i(class='sort-icon fa-solid fa-sort')
+        span Author
+      th(class='sortable' id='year-sort' data-sort='year')
+        i(class='sort-icon fa-solid fa-sort')
+        span Year
     for book, i in []
       tr
         td
