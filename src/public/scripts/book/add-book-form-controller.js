@@ -1,3 +1,5 @@
+import {removeQueryParams} from '../utilities/url.js';
+
 export default class AddBookFormController {
   constructor(webService) {
     this.popupContainer = document.getElementById('add-book-popup-container');
@@ -28,6 +30,7 @@ export default class AddBookFormController {
       await this.webService.addBookToRepository(book, async () => {
         console.log('Book is added');
       }, console.error);
+      location.href = removeQueryParams(location.href);
     });
 
     this.showPopupButton.addEventListener('click', () => {
