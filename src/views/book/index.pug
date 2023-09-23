@@ -1,4 +1,4 @@
-extends layout
+extends ../layout
 
 block header
   link(rel='stylesheet', href='/stylesheets/book/style.css')
@@ -38,9 +38,9 @@ block content
     for book, i in []
       tr
         td
-          a(href='/books/' + book.isbn)= book.title
-        td= book.author
-        td= book.year
+          a(href='/book/' + index.isbn)= index.title
+        td= index.author
+        td= index.year
 
 block scripts
   script(src='/scripts/book/index.js' type='module')

@@ -3,6 +3,6 @@ export default (app) => {
     res.render('index', { title: 'Library' });
   });
   app.get('/book', (req, res) => {
-    res.render('book_index');
+    res.render('book/index');
   });
 }
