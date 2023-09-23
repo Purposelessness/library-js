@@ -2,9 +2,10 @@ import path from 'path';
 
 import express from 'express';
 
-import morgan from 'morgan';
-import createError from 'http-errors';
+import compression from 'compression';
 import cookieParser from 'cookie-parser';
+import createError from 'http-errors';
+import morgan from 'morgan';
 
 import {__dirname} from './config.js';
 import backendRoutes from './loaders/backend_routes.js';
@@ -16,6 +17,8 @@ const app = express();
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
+// compress all responses with gzip
+app.use(compression());
 // print request logs
 app.use(morgan('dev'));
 // process body parameters
