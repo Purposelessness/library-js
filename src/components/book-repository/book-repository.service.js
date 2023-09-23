@@ -5,6 +5,7 @@ import {__dirname} from '../../config.js';
 import {Book} from './book-repository.entities.js';
 import {Error} from '../utilities/error.js';
 import {replacer, reviver} from '../utilities/json.js';
+import {sortBooks} from '../utilities/sorter.js';
 
 export {BookRepository};
 
@@ -27,6 +28,27 @@ class BookRepository {
     this.data.set(BookRepository.isbn++, book);
     console.log(`[BookRepository] Book added: ${book.title}`);
     return book;
+  };
+
+  getAll = (sortKey = null, sortDirection = null) => {
+    if (sortKey === null || sortDirection === null) {
+      return [...this.data.values()];
+    }
+
+    // Sort books
+    if (typeof sortKey !== 'string' || typeof sortDirection !== 'string') {
+      throw new Error(500,
+          `Sort key or sort direction is not a string: ${sortKey}, ${sortDirection}`);
+    }
+    try {
+      const sortedBooks = sortBooks([...this.data.values()], sortKey,
+          sortDirection);
+      console.debug(
+          `[BookRepository] Books sorted by ${sortKey} in ${sortDirection} order: ${sortedBooks}`);
+      return sortedBooks;
+    } catch (err) {
+      throw new Error(400, err.message);
+    }
   };
 
   get = (isbn) => {
