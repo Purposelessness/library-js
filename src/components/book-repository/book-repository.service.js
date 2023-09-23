@@ -31,7 +31,7 @@ class BookRepository {
   };
 
   getAll = (sortKey = null, sortDirection = null) => {
-    if (sortKey === null || sortDirection === null) {
+    if (!sortKey || !sortDirection) {
       return [...this.data.values()];
     }
 

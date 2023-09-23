@@ -9,15 +9,9 @@ class BookRepositoryController {
 
   getBooks = async (req, res, next) => {
     try {
-      let books_json;
-      if (req.query.sortKey && req.query.sortDirection) {
-        books_json = this.bookRepository.getAll(req.query.sortKey,
-            req.query.sortDirection);
-      } else {
-        books_json = this.bookRepository.getAll();
-      }
-      books_json = JSON.stringify(books_json);
-      res.status(200).send(books_json);
+      const books = this.bookRepository.getAll(req.query.sortKey,
+          req.query.sortDirection);
+      res.status(200).send(JSON.stringify(books));
     } catch (err) {
       console.warn(
           `[BookRepository][Controller] Error while getting books: ${err.message}`);
