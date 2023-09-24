@@ -7,10 +7,6 @@ export default class BookFormController {
 
     this.formTitle = this.popupContainer.querySelector('.popup-form-title');
 
-    this.titleInput = document.getElementById(`${prefix}-form-book-title`);
-    this.authorInput = document.getElementById(`${prefix}-form-book-author`);
-    this.yearInput = document.getElementById(`${prefix}-form-book-year`);
-
     this.showPopupButton = document.getElementById(
         `${prefix}-show-popup-button`);
     this.closePopupButton = this.popupContainer.querySelector(
@@ -20,16 +16,12 @@ export default class BookFormController {
   }
 
   addListeners(onSubmit) {
-    this.form.addEventListener('submit', async () => {
-      const title = this.titleInput.value;
-      const author = this.authorInput.value;
-      const year = this.yearInput.value;
-      const book = {
-        title: title, author: author, year: year,
-      };
-      await onSubmit(book, () => {
-        console.log('Book form is submitted');
-      }, console.error);
+    this.form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const entries = Object.fromEntries(formData.entries());
+      await onSubmit(entries);
       location.href = removeQueryParams(location.href);
     });
 
@@ -43,11 +35,5 @@ export default class BookFormController {
 
   closePopup() {
     this.popupContainer.classList.add('hidden');
-  }
-
-  setBookData(book) {
-    this.titleInput.value = book.title;
-    this.authorInput.value = book.author;
-    this.yearInput.value = book.year;
   }
 }

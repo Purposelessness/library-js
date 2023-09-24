@@ -8,9 +8,9 @@ mixin checkboxField(label, name, value)
 
 mixin bookForm(prefix)
   div(class='form-group')
-    +formTextField('Title', prefix, 'form-book-title', 'Enter Title')
-    +formTextField('Author', prefix, 'form-book-author', 'Enter Author')
-    +formTextField('Year', prefix, 'form-book-year', 'Enter Year')
+    +formTextField('Title', prefix, 'book-title', 'Enter Title')
+    +formTextField('Author', prefix, 'book-author', 'Enter Author')
+    +formTextField('Year', prefix, 'book-year', 'Enter Year')
 
 mixin filterBooksForm(legend)
   fieldset

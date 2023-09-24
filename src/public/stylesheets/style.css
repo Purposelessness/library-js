@@ -5,7 +5,7 @@
 }
 
 body {
-  font-size: 14px;
+  font-size: 100%;
 }
 
 .container {
@@ -54,7 +54,7 @@ a {
   width: 25%;
 }
 
-.bottom-navigation {
+.bottom-navigation-bar {
   display: flex;
   position: fixed;
   bottom: 0;
@@ -64,7 +64,7 @@ a {
   overflow: hidden;
 }
 
-.bottom-navigation button {
+.bottom-navigation-bar button {
   background-color: #555;
   color: white;
   border: none;
@@ -73,10 +73,10 @@ a {
   flex: 1;
 }
 
-.bottom-navigation button:hover {
+.bottom-navigation-bar button:hover {
   background-color: #777;
 }
 
-.bottom-navigation button:active {
+.bottom-navigation-bar button:active {
   background-color: #666;
 }

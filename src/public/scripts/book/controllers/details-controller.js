@@ -7,6 +7,10 @@ export default class DetailsController {
 
     this.deleteBookButton = document.getElementById('delete-book-button');
     this.editBookFormController = new BookFormController(
+        'edit', async (entries) => {
+          await this.onEditBookFormSubmit(entries);
+        });
+    this.editBookFormController = new BookFormController(
         'edit', async (book, onSuccess, onError) => {
           await webService.editBookInRepository(this.isbn, book, onSuccess,
               onError);
@@ -23,6 +27,17 @@ export default class DetailsController {
     this.webService = webService;
   }
 
+  onEditBookFormSubmit = async (entries) => {
+    const book = {
+      title: entries['book-title'],
+      author: entries['book-author'],
+      year: entries['book-year'],
+    };
+    await this.webService.editBookInRepository(this.isbn, book,
+        () => { console.log('Edit book form is submitted'); },
+        console.error);
+  };
+
   loadDetailsAsync() {
     const onSuccess = (book) => {
       const bookTitle = book.title;
@@ -33,7 +48,10 @@ export default class DetailsController {
       document.getElementById('book-author').innerText = bookAuthor;
       document.getElementById('book-year').innerText = bookYear;
       // document.getElementById('book-image').value = book.image;
-      this.editBookFormController.setBookData(book);
+      const form = this.editBookFormController.form;
+      form.querySelector('input[name="book-title"]').value = bookTitle;
+      form.querySelector('input[name="book-author"]').value = bookAuthor;
+      form.querySelector('input[name="book-year"]').value = bookYear;
     };
 
     return this.webService.getBookFromRepository(this.isbn, onSuccess,
