@@ -4,6 +4,12 @@ const BOOK_SORT_KEYS = ['title', 'author', 'year'];
 const SORT_DIRECTIONS = ['asc', 'desc'];
 
 const FILTER_KEYS = ['available', 'unavailable', 'overdue', 'non-overdue'];
+const FILTER_MAP = {
+  'available': (book) => book.isAvailable(),
+  'unavailable': (book) => !book.isAvailable(),
+  'overdue': (book) => !book.isAvailable() && book.isOverdue(),
+  'non-overdue': (book) => !book.isAvailable() && !book.isOverdue(),
+};
 
 function sortBooks(books, sortKey, sortDirection) {
   if (!BOOK_SORT_KEYS.includes(sortKey)) {
@@ -24,19 +30,14 @@ function sortBooks(books, sortKey, sortDirection) {
 }
 
 function filterBooks(books, filterKey) {
-  if (!FILTER_KEYS.includes(filterKey)) {
-    throw new Error(`Invalid filter key: ${filterKey}`);
+  const filterFunctions = [];
+  for (const key of filterKey) {
+    if (!FILTER_KEYS.includes(key)) {
+      throw new Error(`Invalid filter key: ${key}`);
+    }
+    filterFunctions.push(FILTER_MAP[key]);
   }
   return books.filter((book) => {
-    switch (filterKey) {
-      case 'available':
-        return book.isAvailable();
-      case 'unavailable':
-        return !book.isAvailable();
-      case 'overdue':
-        return !book.isAvailable() && book.isOverdue();
-      case 'non-overdue':
-        return !book.isAvailable() && !book.isOverdue();
-    }
+    return filterFunctions.some((filterFunction) => filterFunction(book));
   });
 }

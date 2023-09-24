@@ -9,7 +9,10 @@ class BookRepositoryController {
 
   getBooks = async (req, res, next) => {
     try {
-      const books = this.bookRepository.getAll(req.query.filterKey,
+      const filterKey = req.query.filterKey
+          ? req.query.filterKey.split(',')
+          : null;
+      const books = this.bookRepository.getAll(filterKey,
           req.query.sortKey, req.query.sortDirection);
       res.status(200).send(JSON.stringify(books));
     } catch (err) {

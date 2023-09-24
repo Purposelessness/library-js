@@ -58,9 +58,6 @@ class BookRepository {
     }
 
     // Filter books
-    if (typeof filterKey !== 'string') {
-      throw new Error(500, 'Filter is not a string');
-    }
     try {
       books = filterBooks(books, filterKey);
       console.debug(
