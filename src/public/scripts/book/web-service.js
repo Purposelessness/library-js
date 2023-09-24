@@ -70,4 +70,24 @@ export default class WebService {
       }
     });
   };
+
+  editBookInRepository = (isbn, book, onSuccess, onError) => {
+    const url = `${bookRepositoryUrl}/${isbn}`;
+    return fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(book),
+    }).then(response => response.json()).then(data => {
+      if (data === null || Object.keys(data).length === 0) {
+        console.info('Book is not found');
+        return;
+      }
+      onSuccess(data);
+    }).catch(error => {
+      console.error('Error while editing book in repository');
+      onError(error);
+    });
+  }
 }

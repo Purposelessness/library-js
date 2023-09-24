@@ -1,7 +1,7 @@
 import {removeQueryParams} from '../utilities/url.js';
 
-export default class AddBookFormController {
-  constructor(webService, formTitle = null) {
+export default class BookFormController {
+  constructor(onSubmit, formTitle = null) {
     this.popupContainer = document.getElementById('popup-container');
     this.form = document.getElementById('popup-form');
     this.formTitle = document.getElementById('form-title');
@@ -15,16 +15,15 @@ export default class AddBookFormController {
     this.closePopupButton = document.getElementById(
         'close-popup-button');
 
-    this.webService = webService;
-
-    this.addListeners();
+    this.addListeners(onSubmit);
 
     if (formTitle !== null) {
       this.formTitle.innerText = formTitle;
+      this.showPopupButton.innerText = formTitle;
     }
   }
 
-  addListeners() {
+  addListeners(onSubmit) {
     this.form.addEventListener('submit', async () => {
       const title = this.titleInput.value;
       const author = this.authorInput.value;
@@ -32,8 +31,8 @@ export default class AddBookFormController {
       const book = {
         title: title, author: author, year: year,
       };
-      await this.webService.addBookToRepository(book, async () => {
-        console.log('Book is added');
+      await onSubmit(book, () => {
+        console.log('Book form is submitted');
       }, console.error);
       location.href = removeQueryParams(location.href);
     });
@@ -48,5 +47,11 @@ export default class AddBookFormController {
 
   closePopup() {
     this.popupContainer.classList.add('hidden');
+  }
+
+  setBookData(book) {
+    this.titleInput.value = book.title;
+    this.authorInput.value = book.author;
+    this.yearInput.value = book.year;
   }
 }
