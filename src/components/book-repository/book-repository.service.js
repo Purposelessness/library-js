@@ -4,7 +4,6 @@ import path from 'path';
 import {__dirname} from '../../config.js';
 import {Book} from './book-repository.entities.js';
 import {Error} from '../utilities/error.js';
-import {replacer, reviver} from '../utilities/json.js';
 import {filterBooks, sortBooks} from '../utilities/book-helper.js';
 
 export {BookRepository};
@@ -133,13 +132,19 @@ class BookRepository {
         console.warn(`[BookRepository] Error when loading data: ${err}`);
         throw err;
       }
+      this.data = new Map();
+      const booksArray = JSON.parse(buf.toString());
+      BookRepository.isbn = booksArray.length;
+
+      for (const bookObj of booksArray) {
+        const book = Book.fromObject(bookObj);
+        this.data.set(book.isbn, book);
+      }
       console.info('[BookRepository] Data loaded');
-      this.data = new Map(JSON.parse(buf.toString(), reviver));
-      BookRepository.isbn = this.data.size;
     });
   };
 
   toJson = () => {
-    return JSON.stringify([...this.data], replacer);
+    return JSON.stringify([...this.data.values()]);
   }
 }

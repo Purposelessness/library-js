@@ -9,6 +9,10 @@ class Book {
     this.reader = null;
   }
 
+  static fromObject(obj) {
+    return Object.assign(new Book(), obj);
+  }
+
   setReader(name, date) {
     this.reader = {
       name: name,
