@@ -68,4 +68,9 @@ export default class TableController {
     await this.webService.getBooksFromRepository(fillTable, console.error,
         this.filterKey, this.sortKey, this.sortDirection);
   }
+
+  async rerenderTableAsync() {
+    this.clearTable();
+    await this.renderTableAsync();
+  }
 }

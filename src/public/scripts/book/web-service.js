@@ -45,6 +45,7 @@ export default class WebService {
   };
 
   addBookToRepository = (book, onSuccess, onError) => {
+    console.log(`POST ${bookRepositoryUrl}: ${JSON.stringify(book)}`);
     return fetch(bookRepositoryUrl, {
       method: 'POST',
       headers: {

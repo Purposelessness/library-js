@@ -13,13 +13,30 @@ export default class BookFormController {
     this.addListeners(onSubmit);
   }
 
+  extractParameters(event) {
+    const form = event.target;
+    const formData = new FormData(form);
+    const entries = [...formData.entries()];
+    let parameters = {};
+    for (const [key, value] of entries) {
+      if (!parameters[key]) {
+        parameters[key] = [];
+      }
+      parameters[key].push(value);
+    }
+    for (const key in parameters) {
+      if (parameters[key].length === 1) {
+        parameters[key] = parameters[key][0];
+      }
+    }
+    return parameters;
+  }
+
   addListeners(onSubmit) {
     this.form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const form = e.target;
-      const formData = new FormData(form);
-      const entries = Object.fromEntries(formData.entries());
-      await onSubmit(entries);
+      const parameters = this.extractParameters(e);
+      await onSubmit(parameters);
     });
 
     this.showPopupButton.addEventListener('click', () => {

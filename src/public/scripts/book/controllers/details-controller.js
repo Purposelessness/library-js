@@ -9,6 +9,7 @@ export default class DetailsController {
     this.editBookFormController = new BookFormController(
         'edit', async (entries) => {
           await this.onEditBookFormSubmit(entries);
+          await this.loadDetailsAsync();
         });
 
     this.deleteBookButton.addEventListener('click', async () => {

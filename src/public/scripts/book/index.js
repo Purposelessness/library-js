@@ -14,13 +14,13 @@ const addBookFormController = new BookFormController(
       };
       await webService.addBookToRepository(book,
           () => { console.log('Add book form is submitted'); }, console.error);
+      await tableController.rerenderTableAsync();
     });
 const filterBooksFormController = new BookFormController(
     'filter', async (entries) => {
       console.log(entries);
       tableController.filterKey = entries['filter-key'];
-      tableController.clearTable();
-      await tableController.renderTableAsync();
+      await tableController.rerenderTableAsync();
     });
 
 const _ = tableController.renderTableAsync();
