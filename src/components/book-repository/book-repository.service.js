@@ -5,7 +5,7 @@ import {__dirname} from '../../config.js';
 import {Book} from './book-repository.entities.js';
 import {Error} from '../utilities/error.js';
 import {replacer, reviver} from '../utilities/json.js';
-import {sortBooks} from '../utilities/sorter.js';
+import {filterBooks, sortBooks} from '../utilities/book-helper.js';
 
 export {BookRepository};
 
@@ -51,9 +51,27 @@ class BookRepository {
     return book;
   };
 
-  getAll = (sortKey = null, sortDirection = null) => {
+  getAll = (filterKey = null, sortKey = null, sortDirection = null) => {
+    let books = [...this.data.values()];
+
+    if (!filterKey) {
+      return books;
+    }
+
+    // Filter books
+    if (typeof filterKey !== 'string') {
+      throw new Error(500, 'Filter is not a string');
+    }
+    try {
+      books = filterBooks(books, filterKey);
+      console.debug(
+          `[BookRepository] Books filtered by ${filterKey}: ${books}`);
+    } catch (err) {
+      throw new Error(400, err.message);
+    }
+
     if (!sortKey || !sortDirection) {
-      return [...this.data.values()];
+      return books;
     }
 
     // Sort books
@@ -62,14 +80,14 @@ class BookRepository {
           `Sort key or sort direction is not a string: ${sortKey}, ${sortDirection}`);
     }
     try {
-      const sortedBooks = sortBooks([...this.data.values()], sortKey,
-          sortDirection);
+      books = sortBooks(books, sortKey, sortDirection);
       console.debug(
-          `[BookRepository] Books sorted by ${sortKey} in ${sortDirection} order: ${sortedBooks}`);
-      return sortedBooks;
+          `[BookRepository] Books sorted by ${sortKey} in ${sortDirection} order: ${books}`);
     } catch (err) {
       throw new Error(400, err.message);
     }
+
+    return books;
   };
 
   get = (isbn) => {

@@ -12,7 +12,7 @@ class Book {
   setReader(name, date) {
     this.reader = {
       name: name,
-      date: date,
+      dueDate: date,
     };
   }
 
@@ -22,6 +22,12 @@ class Book {
 
   isAvailable() {
     return this.reader === null;
+  }
+
+  isOverdue() {
+    // Check if the book is overdue by comparing the due date with today's date
+    const today = new Date();
+    return this.reader.dueDate < today;
   }
 
   isValid() {
