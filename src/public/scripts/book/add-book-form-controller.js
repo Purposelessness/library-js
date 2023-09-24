@@ -1,22 +1,27 @@
 import {removeQueryParams} from '../utilities/url.js';
 
 export default class AddBookFormController {
-  constructor(webService) {
-    this.popupContainer = document.getElementById('add-book-popup-container');
-    this.form = document.getElementById('add-book-form');
+  constructor(webService, formTitle = null) {
+    this.popupContainer = document.getElementById('popup-container');
+    this.form = document.getElementById('popup-form');
+    this.formTitle = document.getElementById('form-title');
 
-    this.titleInput = document.getElementById('add-book-title');
-    this.authorInput = document.getElementById('add-book-author');
-    this.yearInput = document.getElementById('add-book-year');
+    this.titleInput = document.getElementById('form-book-title');
+    this.authorInput = document.getElementById('form-book-author');
+    this.yearInput = document.getElementById('form-book-year');
 
     this.showPopupButton = document.getElementById(
-        'show-add-book-popup-button');
+        'show-popup-button');
     this.closePopupButton = document.getElementById(
-        'close-add-book-popup-button');
+        'close-popup-button');
 
     this.webService = webService;
 
     this.addListeners();
+
+    if (formTitle !== null) {
+      this.formTitle.innerText = formTitle;
+    }
   }
 
   addListeners() {

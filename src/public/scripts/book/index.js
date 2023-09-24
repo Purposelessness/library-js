@@ -5,6 +5,6 @@ import WebService from './web-service.js';
 const webService = new WebService();
 
 const tableController = new TableController(webService);
-const addBookFormController = new AddBookFormController(webService);
+const addBookFormController = new AddBookFormController(webService, 'Add book');
 
 const _ = tableController.renderTableAsync();

@@ -1,7 +1,10 @@
 extends ../layout
 
 block header
-  link(rel='stylesheet', href='/stylesheets/book/details.css')
+  link(rel='stylesheet', href='/stylesheets/book/style.css')
+
+block outer
+  include ../shared/popup
 
 block content
   span(id='isbn')= isbn
