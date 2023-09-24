@@ -1,4 +1,4 @@
-import Sortable from '../elements/sortable.js';
+import Sortable from '../../elements/sortable.js';
 
 export default class TableController {
   constructor(webService) {

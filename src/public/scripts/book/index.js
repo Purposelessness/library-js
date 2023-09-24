@@ -1,5 +1,5 @@
-import BookFormController from './book-form-controller.js';
-import TableController from './table-controller.js';
+import BookFormController from './controllers/book-form-controller.js';
+import TableController from './controllers/table-controller.js';
 import WebService from './web-service.js';
 
 const webService = new WebService();

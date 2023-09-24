@@ -1,4 +1,4 @@
-import {removeQueryParams} from '../utilities/url.js';
+import {removeQueryParams} from '../../utilities/url.js';
 
 export default class BookFormController {
   constructor(onSubmit) {
