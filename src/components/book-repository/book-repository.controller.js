@@ -41,6 +41,18 @@ class BookRepositoryController {
     }
   };
 
+  editBook = async (req, res, next) => {
+    try {
+      const isbn = parseInt(req.params.isbn);
+      const book = new Book(req.body.title, req.body.author, req.body.year);
+      res.status(200).send(await this.bookRepository.edit(isbn, book));
+    } catch (err) {
+      console.warn(
+          `[BookRepository][Controller] Error while editing book: ${err.message}`);
+      next(err);
+    }
+  };
+
   deleteBook = async (req, res, next) => {
     try {
       const isbn = parseInt(req.params.isbn);

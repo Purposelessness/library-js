@@ -31,6 +31,26 @@ class BookRepository {
     return book;
   };
 
+  edit = (isbn, book) => {
+    if (typeof isbn !== 'number') {
+      throw new Error(500, 'ISBN is not a number');
+    }
+    if (typeof book !== 'object' || !(book instanceof Book)) {
+      throw new Error(500, 'Book is not an object or not an instance of Book');
+    }
+    if (!book.isValid()) {
+      throw new Error(400, 'Invalid request body');
+    }
+    if (!this.data.has(isbn)) {
+      throw new Error(404, `Book with ISBN ${isbn} is not found`);
+    }
+
+    book.isbn = isbn;
+    this.data.set(isbn, book);
+    console.log(`[BookRepository] Book edited: ${book.title}`);
+    return book;
+  };
+
   getAll = (sortKey = null, sortDirection = null) => {
     if (!sortKey || !sortDirection) {
       return [...this.data.values()];

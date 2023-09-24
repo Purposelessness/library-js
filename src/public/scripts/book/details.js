@@ -8,7 +8,7 @@ const deleteBookButton = document.getElementById('delete-book-button');
 
 const webService = new WebService();
 const editBookFormController = new BookFormController(
-    async (isbn, book, onSuccess, onError) => {
+    async (book, onSuccess, onError) => {
       await webService.editBookInRepository(isbn, book, onSuccess, onError);
     });
 
