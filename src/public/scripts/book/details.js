@@ -10,7 +10,7 @@ const webService = new WebService();
 const editBookFormController = new BookFormController(
     async (isbn, book, onSuccess, onError) => {
       await webService.editBookInRepository(isbn, book, onSuccess, onError);
-    }, 'Edit book');
+    });
 
 deleteBookButton.addEventListener('click', async () => {
   await webService.deleteBookFromRepository(isbn,

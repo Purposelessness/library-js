@@ -1,7 +1,7 @@
 import {removeQueryParams} from '../utilities/url.js';
 
 export default class BookFormController {
-  constructor(onSubmit, formTitle = null) {
+  constructor(onSubmit) {
     this.popupContainer = document.getElementById('popup-container');
     this.form = document.getElementById('popup-form');
     this.formTitle = document.getElementById('form-title');
@@ -16,11 +16,6 @@ export default class BookFormController {
         'close-popup-button');
 
     this.addListeners(onSubmit);
-
-    if (formTitle !== null) {
-      this.formTitle.innerText = formTitle;
-      this.showPopupButton.innerText = formTitle;
-    }
   }
 
   addListeners(onSubmit) {

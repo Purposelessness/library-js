@@ -1,18 +1,19 @@
-div(class='popup-form-container hidden' id='popup-container')
-  form(class='popup-form' id='popup-form')
-    label(id='form-title')
+mixin popup(title, showButtonText, submitButtonText)
+  div(class='popup-form-container hidden' id='popup-container')
+    form(class='popup-form' id='popup-form')
+      label(id='form-title')= title
 
-    div(class='form-group')
-      label(for='form-book-title') Title
-      input(type='text' name='form-book-title' placeholder='Enter Title' id='form-book-title' required)
+      div(class='form-group')
+        label(for='form-book-title') Title
+        input(type='text' name='form-book-title' placeholder='Enter Title' id='form-book-title' required)
 
-      label(for='form-book-author') Author
-      input(type='text' name='form-book-author' placeholder='Enter Author' id='form-book-author' required)
+        label(for='form-book-author') Author
+        input(type='text' name='form-book-author' placeholder='Enter Author' id='form-book-author' required)
 
-      label(for='form-book-year') Year
-      input(type='number' name='form-book-year' placeholder='Enter Year' id='form-book-year' required)
+        label(for='form-book-year') Year
+        input(type='number' name='form-book-year' placeholder='Enter Year' id='form-book-year' required)
 
-    button(type='submit' class='form-button' id='submit-popup-button') Add
-    button(type='button' class='form-button cancel' id='close-popup-button') Close
+      button(type='submit' class='form-button' id='submit-popup-button')= submitButtonText
+      button(type='button' class='form-button cancel' id='close-popup-button') Close
 
-button(class='show-popup' id='show-popup-button')
+  button(class='show-popup' id='show-popup-button')= showButtonText
