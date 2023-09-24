@@ -4,9 +4,15 @@ export default class WebService {
   getBooksFromRepository = (
       onSuccess, onError, filterKey = null, sortKey = null,
       sortDirection = null) => {
-    const url = sortKey === null && sortDirection === null ?
-        bookRepositoryUrl :
-        `${bookRepositoryUrl}?filterKey=${filterKey}&sortKey=${sortKey}&sortDirection=${sortDirection}`;
+    let url = `${bookRepositoryUrl}?`;
+    if (filterKey) {
+      url += `filterKey=${filterKey}`;
+    }
+    if (sortKey && sortDirection) {
+      url += `&sortKey=${sortKey}&sortDirection=${sortDirection}`;
+    }
+
+    console.log(`GET ${url}`);
     return fetch(url, {
       method: 'GET',
     }).then(response => response.json()).then(data => {

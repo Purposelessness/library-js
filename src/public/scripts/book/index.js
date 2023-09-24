@@ -15,9 +15,12 @@ const addBookFormController = new BookFormController(
       await webService.addBookToRepository(book,
           () => { console.log('Add book form is submitted'); }, console.error);
     });
-// const filterBookFormController = new BookFormController(
-//     'filter', async (book, onSuccess, onError) => {
-//       await webService.getBooksFromRepository(onSuccess, onError,
-//     });
+const filterBooksFormController = new BookFormController(
+    'filter', async (entries) => {
+      console.log(entries);
+      tableController.filterKey = entries['filter-key'];
+      tableController.clearTable();
+      await tableController.renderTableAsync();
+    });
 
 const _ = tableController.renderTableAsync();

@@ -1,5 +1,3 @@
-import {removeQueryParams} from '../../utilities/url.js';
-
 export default class BookFormController {
   constructor(prefix, onSubmit) {
     this.popupContainer = document.getElementById(`${prefix}-popup-container`);
@@ -22,7 +20,6 @@ export default class BookFormController {
       const formData = new FormData(form);
       const entries = Object.fromEntries(formData.entries());
       await onSubmit(entries);
-      location.href = removeQueryParams(location.href);
     });
 
     this.showPopupButton.addEventListener('click', () => {

@@ -1,5 +1,5 @@
 mixin formTextField(label, prefix, name, placeholder, required=true)
-  label(for=id)= label
+  label(for=`${prefix}-${name}`)= label
   input(type='text' name=name placeholder=placeholder id=`${prefix}-${name}` required=required)
 
 mixin checkboxField(label, name, value)
@@ -13,10 +13,10 @@ mixin bookForm(prefix)
     +formTextField('Year', prefix, 'book-year', 'Enter Year')
 
 mixin filterBooksForm(legend)
-  fieldset
+  fieldset(class='filter-books-fieldset')
     legend= legend
-    div
-      +checkboxField('Available', 'filter-books', 'available')
-      +checkboxField('Unavailable', 'filter-books', 'unavailable')
-      +checkboxField('Overdue', 'filter-books', 'overdue')
-      +checkboxField('Non-overdue', 'filter-books', 'non-overdue')
+    div(class='checkbox-group')
+      +checkboxField('Available', 'filter-key', 'available')
+      +checkboxField('Unavailable', 'filter-key', 'unavailable')
+      +checkboxField('Overdue', 'filter-key', 'overdue')
+      +checkboxField('Non-overdue', 'filter-key', 'non-overdue')

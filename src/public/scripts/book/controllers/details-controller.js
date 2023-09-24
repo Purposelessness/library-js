@@ -10,11 +10,6 @@ export default class DetailsController {
         'edit', async (entries) => {
           await this.onEditBookFormSubmit(entries);
         });
-    this.editBookFormController = new BookFormController(
-        'edit', async (book, onSuccess, onError) => {
-          await webService.editBookInRepository(this.isbn, book, onSuccess,
-              onError);
-        });
 
     this.deleteBookButton.addEventListener('click', async () => {
       await webService.deleteBookFromRepository(this.isbn,

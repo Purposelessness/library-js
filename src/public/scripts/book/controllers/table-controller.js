@@ -6,6 +6,9 @@ export default class TableController {
 
     this.sortables = this.createSortables();
 
+    this.filterKey = null;
+    this.sortKey = null;
+    this.sortDirection = null;
     this.webService = webService;
 
     this.createOnSortListener(document);
@@ -22,8 +25,18 @@ export default class TableController {
 
   createOnSortListener() {
     document.addEventListener('sort', async (event) => {
-      await this.renderTableAsync(event.detail.key, event.detail.direction);
+      this.setSortingOptions(event.detail.key, event.detail.direction);
+      await this.renderTableAsync();
     });
+  }
+
+  setSortingOptions(sortKey, sortDirection) {
+    if (sortDirection === 'none') {
+      sortKey = null;
+      sortDirection = null;
+    }
+    this.sortKey = sortKey;
+    this.sortDirection = sortDirection;
   }
 
   clearTable() {
@@ -32,14 +45,9 @@ export default class TableController {
     }
   }
 
-  async renderTableAsync(sortKey = null, sortDirection = null) {
-    if (sortKey !== null && sortDirection !== null) {
-      if (sortDirection === 'none') {
-        sortKey = null;
-        sortDirection = null;
-      } else {
-        console.log(`Sorting by ${sortKey} in ${sortDirection}`);
-      }
+  async renderTableAsync() {
+    if (this.sortKey && this.sortDirection) {
+      console.log(`Sorting by ${this.sortKey} in ${this.sortDirection}`);
     }
 
     const fillTable = (books) => {
@@ -58,6 +66,6 @@ export default class TableController {
       }
     };
     await this.webService.getBooksFromRepository(fillTable, console.error,
-        sortKey, sortDirection);
+        this.filterKey, this.sortKey, this.sortDirection);
   }
 }
