@@ -54,6 +54,7 @@ export default class TableController {
 
         row.insertCell().innerText = book.author;
         row.insertCell().innerText = book.year;
+        row.insertCell().innerText = book.reader ? book.reader.dueDate : '';
       }
     };
     await this.webService.getBooksFromRepository(fillTable, console.error,

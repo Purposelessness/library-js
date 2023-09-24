@@ -1,6 +1,7 @@
 extends ../layout
 
 include ../shared/popup
+include ../shared/book-templates
 
 mixin tableHeader(id, dataSort, text)
   th(class='sortable' id=id data-sort=dataSort)
@@ -11,7 +12,8 @@ block header
   link(rel='stylesheet', href='/stylesheets/book/style.css')
 
 block outer
-  +popup('Add book', 'Add book', 'Add')
+  +popup('add', 'Add book', 'Add book', 'Add')
+    +bookForm('add')
 
 block content
   table(id='book-table', border='1')
@@ -19,6 +21,7 @@ block content
       +tableHeader('title-sort', 'title', 'Title')
       +tableHeader('author-sort', 'author', 'Author')
       +tableHeader('year-sort', 'year', 'Year')
+      +tableHeader('due-data-sort', 'dueDate', 'Due date')
 
 block scripts
   script(src='/scripts/book/index.js' type='module')

@@ -2,10 +2,11 @@ const bookRepositoryUrl = '/api/book-repository';
 
 export default class WebService {
   getBooksFromRepository = (
-      onSuccess, onError, sortKey = null, sortDirection = null) => {
+      onSuccess, onError, filterKey = null, sortKey = null,
+      sortDirection = null) => {
     const url = sortKey === null && sortDirection === null ?
         bookRepositoryUrl :
-        `${bookRepositoryUrl}?sortKey=${sortKey}&sortDirection=${sortDirection}`;
+        `${bookRepositoryUrl}?filterKey=${filterKey}&sortKey=${sortKey}&sortDirection=${sortDirection}`;
     return fetch(url, {
       method: 'GET',
     }).then(response => response.json()).then(data => {

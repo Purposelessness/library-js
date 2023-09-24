@@ -1,19 +1,20 @@
 import {removeQueryParams} from '../../utilities/url.js';
 
 export default class BookFormController {
-  constructor(onSubmit) {
-    this.popupContainer = document.getElementById('popup-container');
-    this.form = document.getElementById('popup-form');
-    this.formTitle = document.getElementById('form-title');
+  constructor(prefix, onSubmit) {
+    this.popupContainer = document.getElementById(`${prefix}-popup-container`);
+    this.form = this.popupContainer.querySelector('.popup-form');
 
-    this.titleInput = document.getElementById('form-book-title');
-    this.authorInput = document.getElementById('form-book-author');
-    this.yearInput = document.getElementById('form-book-year');
+    this.formTitle = this.popupContainer.querySelector('.popup-form-title');
+
+    this.titleInput = document.getElementById(`${prefix}-form-book-title`);
+    this.authorInput = document.getElementById(`${prefix}-form-book-author`);
+    this.yearInput = document.getElementById(`${prefix}-form-book-year`);
 
     this.showPopupButton = document.getElementById(
-        'show-popup-button');
-    this.closePopupButton = document.getElementById(
-        'close-popup-button');
+        `${prefix}-show-popup-button`);
+    this.closePopupButton = this.popupContainer.querySelector(
+        '.form-button.cancel');
 
     this.addListeners(onSubmit);
   }

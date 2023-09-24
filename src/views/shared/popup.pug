@@ -1,19 +1,12 @@
-mixin popup(title, showButtonText, submitButtonText)
-  div(class='popup-form-container hidden' id='popup-container')
-    form(class='popup-form' id='popup-form')
-      label(id='form-title')= title
+mixin popup(prefix, title, showButtonText, submitButtonText, closeButtonText='Close')
+  div(class='popup-container hidden' id=`${prefix}-popup-container`)
+    form(class='popup-form')
+      label(class=`popup-form-title`)= title
 
-      div(class='form-group')
-        label(for='form-book-title') Title
-        input(type='text' name='form-book-title' placeholder='Enter Title' id='form-book-title' required)
+      if block
+        block
 
-        label(for='form-book-author') Author
-        input(type='text' name='form-book-author' placeholder='Enter Author' id='form-book-author' required)
+      button(type='submit' class='form-button')= submitButtonText
+      button(type='button' class='form-button cancel')= closeButtonText
 
-        label(for='form-book-year') Year
-        input(type='number' name='form-book-year' placeholder='Enter Year' id='form-book-year' required)
-
-      button(type='submit' class='form-button' id='submit-popup-button')= submitButtonText
-      button(type='button' class='form-button cancel' id='close-popup-button') Close
-
-  button(class='show-popup' id='show-popup-button')= showButtonText
+  button(class='show-popup-button' id=`${prefix}-show-popup-button`)= showButtonText

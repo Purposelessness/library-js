@@ -1,12 +1,14 @@
 extends ../layout
 
 include ../shared/popup
+include ../shared/book-templates
 
 block header
   link(rel='stylesheet', href='/stylesheets/book/style.css')
 
 block outer
-  +popup('Edit book', 'Edit book', 'Edit')
+  +popup('edit', 'Edit book', 'Edit book', 'Edit')
+    +bookForm('edit')
 
 block content
   span(id='isbn')= isbn

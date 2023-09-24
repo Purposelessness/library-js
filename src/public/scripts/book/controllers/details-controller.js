@@ -7,7 +7,7 @@ export default class DetailsController {
 
     this.deleteBookButton = document.getElementById('delete-book-button');
     this.editBookFormController = new BookFormController(
-        async (book, onSuccess, onError) => {
+        'edit', async (book, onSuccess, onError) => {
           await webService.editBookInRepository(this.isbn, book, onSuccess,
               onError);
         });

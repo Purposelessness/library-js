@@ -1,0 +1,9 @@
+mixin formTextField(label, prefix, name, placeholder, required=true)
+  label(for=id)= label
+  input(type='text' name=name placeholder=placeholder id=`${prefix}-${name}` required=required)
+
+mixin bookForm(prefix)
+  div(class='form-group')
+    +formTextField('Title', prefix, 'form-book-title', 'Enter Title')
+    +formTextField('Author', prefix, 'form-book-author', 'Enter Author')
+    +formTextField('Year', prefix, 'form-book-year', 'Enter Year')
