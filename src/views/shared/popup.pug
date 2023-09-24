@@ -1,12 +1,16 @@
-mixin popup(prefix, title, showButtonText, submitButtonText, closeButtonText='Close')
+mixin popup(prefix, title, submitButtonText, closeButtonText='Close')
   div(class='popup-container hidden' id=`${prefix}-popup-container`)
     form(class='popup-form')
       label(class=`popup-form-title`)= title
 
-      if block
-        block
+      block
 
       button(type='submit' class='form-button')= submitButtonText
       button(type='button' class='form-button cancel')= closeButtonText
 
-  button(class='show-popup-button' id=`${prefix}-show-popup-button`)= showButtonText
+mixin showPopupButton(prefix, title)
+  button(class='show-popup-button' id=`${prefix}-show-popup-button`)= title
+
+mixin bottomNavigation()
+  div(class='bottom-navigation')
+    block

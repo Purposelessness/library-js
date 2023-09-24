@@ -12,8 +12,13 @@ block header
   link(rel='stylesheet', href='/stylesheets/book/style.css')
 
 block outer
-  +popup('add', 'Add book', 'Add book', 'Add')
+  +popup('add', 'Add book', 'Add')
     +bookForm('add')
+  +popup('filter', 'Filter books', 'Filter')
+    +filterBooksForm('Filter books')
+  +bottomNavigation()
+    +showPopupButton('add', 'Add book')
+    +showPopupButton('filter', 'Filter books')
 
 block content
   table(id='book-table', border='1')

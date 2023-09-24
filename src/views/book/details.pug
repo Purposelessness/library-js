@@ -7,8 +7,10 @@ block header
   link(rel='stylesheet', href='/stylesheets/book/style.css')
 
 block outer
-  +popup('edit', 'Edit book', 'Edit book', 'Edit')
+  +popup('edit', 'Edit book', 'Edit')
     +bookForm('edit')
+  +bottomNavigation()
+    +showPopupButton('edit', 'Edit book')
 
 block content
   span(id='isbn')= isbn
