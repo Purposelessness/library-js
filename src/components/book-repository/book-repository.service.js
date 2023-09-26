@@ -60,7 +60,7 @@ class BookRepository {
     // Filter books
     try {
       books = filterBooks(books, filterKey);
-      console.debug(
+      console.log(
           `[BookRepository] Books filtered by ${filterKey}: ${books}`);
     } catch (err) {
       throw new Error(400, err.message);
@@ -77,7 +77,7 @@ class BookRepository {
     }
     try {
       books = sortBooks(books, sortKey, sortDirection);
-      console.debug(
+      console.log(
           `[BookRepository] Books sorted by ${sortKey} in ${sortDirection} order: ${books}`);
     } catch (err) {
       throw new Error(400, err.message);
@@ -139,6 +139,42 @@ class BookRepository {
       }
       console.info('[BookRepository] Data loaded');
     });
+  };
+
+  editReader = (isbn, reader) => {
+    if (typeof isbn !== 'number') {
+      throw new Error(500, 'ISBN is not a number');
+    }
+    if (typeof reader !== 'object') {
+      throw new Error(500, 'Reader is not an object');
+    }
+    if (!this.data.has(isbn)) {
+      throw new Error(404, `Book with ISBN ${isbn} is not found`);
+    }
+    if (!reader.name || !reader.dueDate) {
+      throw new Error(400, 'Invalid request body');
+    }
+
+    const book = this.data.get(isbn);
+    book.reader = reader;
+    this.data.set(isbn, book);
+    console.log(`[BookRepository] Book reader edited: ${book.title}`);
+    return book;
+  };
+
+  deleteReader = (isbn) => {
+    if (typeof isbn !== 'number') {
+      throw new Error(500, 'ISBN is not a number');
+    }
+    if (!this.data.has(isbn)) {
+      throw new Error(404, `Book with ISBN ${isbn} is not found`);
+    }
+
+    const book = this.data.get(isbn);
+    book.reader = null;
+    this.data.set(isbn, book);
+    console.log(`[BookRepository] Book reader deleted: ${book.title}`);
+    return book;
   };
 
   toJson = () => {

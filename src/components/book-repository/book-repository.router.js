@@ -15,6 +15,8 @@ class BookRepositoryRouter {
     router.route('/:isbn(\\d+)').put(this.bookController.editBook);
     router.route('/:isbn(\\d+)').delete(this.bookController.deleteBook);
     router.route('/save').post(this.bookController.saveBooks);
+    router.route('/:isbn(\\d+)/reader').put(this.bookController.editBookReader);
+    router.route('/:isbn(\\d+)/reader').delete(this.bookController.deleteBookReader);
     return router;
   }
 }

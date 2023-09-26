@@ -78,4 +78,28 @@ class BookRepositoryController {
       next(err);
     }
   };
+
+  editBookReader = async (req, res, next) => {
+    try {
+      const isbn = parseInt(req.params.isbn);
+      const reader = req.body;
+      res.status(200).send(await this.bookRepository.editReader(isbn, reader));
+    } catch (err) {
+      console.warn(
+          `[BookRepository][Controller] Error while editing book reader: ${err.message}`);
+      next(err);
+    }
+  };
+
+  deleteBookReader = async (req, res, next) => {
+    try {
+      const isbn = parseInt(req.params.isbn);
+      await this.bookRepository.deleteReader(isbn);
+      res.status(204).send();
+    } catch (err) {
+      console.warn(
+          `[BookRepository][Controller] Error while deleting book reader: ${err.message}`);
+      next(err);
+    }
+  };
 }
