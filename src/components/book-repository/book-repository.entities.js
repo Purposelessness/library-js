@@ -35,7 +35,8 @@ class Book {
   isOverdue() {
     // Check if the book is overdue by comparing the due date with today's date
     const today = new Date();
-    return this.reader.dueDate < today;
+    const dueDate = new Date(this.reader.dueDate);
+    return dueDate < today;
   }
 
   isValid() {
