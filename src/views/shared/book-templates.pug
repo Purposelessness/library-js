@@ -2,6 +2,10 @@ mixin formTextField(label, prefix, name, placeholder, required=true)
   label(for=`${prefix}-${name}`)= label
   input(type='text' name=name placeholder=placeholder id=`${prefix}-${name}` required=required)
 
+mixin formDateField(label, prefix, name, placeholder, required=true)
+  label(for=`${prefix}-${name}`)= label
+  input(type='date' name=name placeholder=placeholder id=`${prefix}-${name}` required=required)
+
 mixin checkboxField(label, name, value)
   input(type='checkbox' name=name id=`${name}-${value}` value=value)
   label(for=`${name}-${value}`)= label
@@ -11,6 +15,11 @@ mixin bookForm(prefix)
     +formTextField('Title', prefix, 'book-title', 'Enter Title')
     +formTextField('Author', prefix, 'book-author', 'Enter Author')
     +formTextField('Year', prefix, 'book-year', 'Enter Year')
+
+mixin bookReaderForm(prefix)
+  div(class='form-group')
+    +formTextField('Name', prefix, 'book-reader-name', 'Enter Name')
+    +formDateField('Date', prefix, 'book-reader-date', 'Enter Date')
 
 mixin filterBooksForm(legend)
   fieldset(class='filter-books-fieldset')

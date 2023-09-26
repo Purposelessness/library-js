@@ -97,5 +97,40 @@ export default class WebService {
       console.error('Error while editing book in repository');
       onError(error);
     });
-  }
+  };
+
+  editBookReaderInRepository = (isbn, reader, onSuccess, onError) => {
+    const url = `${bookRepositoryUrl}/${isbn}/reader`;
+    return fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(reader),
+    }).then(response => response.json()).then(data => {
+      if (data === null || Object.keys(data).length === 0) {
+        console.info('Book is not found');
+        return;
+      }
+      onSuccess(data);
+    }).catch(error => {
+      console.error('Error while editing book reader in repository');
+      onError(error);
+    });
+  };
+
+  deleteBookReaderFromRepository = (isbn, onSuccess, onError) => {
+    const url = `${bookRepositoryUrl}/${isbn}/reader`;
+    return fetch(url, {
+      method: 'DELETE',
+    }).then(response => {
+      console.debug(
+          `DELETE ${bookRepositoryUrl}/${isbn}/reader: ${response.status}, ${response.statusText}`);
+      if (response.status === 204) {
+        onSuccess();
+      } else {
+        onError();
+      }
+    });
+  };
 }

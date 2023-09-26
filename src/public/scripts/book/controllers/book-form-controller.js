@@ -1,5 +1,5 @@
 export default class BookFormController {
-  constructor(prefix, onSubmit) {
+  constructor(prefix, onSubmit, onCancel = null) {
     this.popupContainer = document.getElementById(`${prefix}-popup-container`);
     this.form = this.popupContainer.querySelector('.popup-form');
 
@@ -10,7 +10,7 @@ export default class BookFormController {
     this.closePopupButton = this.popupContainer.querySelector(
         '.form-button.cancel');
 
-    this.addListeners(onSubmit);
+    this.addListeners(onSubmit, onCancel);
   }
 
   extractParameters(event) {
@@ -32,18 +32,28 @@ export default class BookFormController {
     return parameters;
   }
 
-  addListeners(onSubmit) {
+  addListeners(onSubmit, onCancel = null) {
     this.form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const parameters = this.extractParameters(e);
-      await onSubmit(parameters);
+      let shouldClose = await onSubmit(parameters);
+      if (shouldClose) {
+        this.closePopup();
+      }
     });
 
     this.showPopupButton.addEventListener('click', () => {
       this.popupContainer.classList.remove('hidden');
     });
-    this.closePopupButton.addEventListener('click', () => {
+    this.closePopupButton.addEventListener('click', async () => {
       this.closePopup();
+      if (!onCancel) {
+        return;
+      }
+      let shouldClose = await onCancel();
+      if (shouldClose === undefined || shouldClose) {
+        this.closePopup();
+      }
     });
   }
 

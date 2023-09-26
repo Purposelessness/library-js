@@ -9,8 +9,11 @@ block header
 block outer
   +popup('edit', 'Edit book', 'Edit')
     +bookForm('edit')
+  +popup('reader', 'Change reader', 'Set', 'Delete')
+    +bookReaderForm('reader')
   +bottomNavigationBar()
     +showPopupButton('edit', 'Edit book')
+    +showPopupButton('reader', 'Change reader')
 
 block content
   span(id='isbn')= isbn

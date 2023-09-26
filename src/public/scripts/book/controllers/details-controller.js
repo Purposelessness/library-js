@@ -8,7 +8,16 @@ export default class DetailsController {
     this.deleteBookButton = document.getElementById('delete-book-button');
     this.editBookFormController = new BookFormController(
         'edit', async (entries) => {
-          await this.onEditBookFormSubmit(entries);
+          await this.onEditBookFormSubmitted(entries);
+          await this.loadDetailsAsync();
+        });
+    this.changeBookReaderFormController = new BookFormController(
+        'reader', async (entries) => {
+          await this.onEditBookReaderFormSubmitted(entries);
+          await this.loadDetailsAsync();
+          return true;
+        }, async () => {
+          await this.onDeleteBookReaderButtonClicked();
           await this.loadDetailsAsync();
         });
 
@@ -23,7 +32,7 @@ export default class DetailsController {
     this.webService = webService;
   }
 
-  onEditBookFormSubmit = async (entries) => {
+  onEditBookFormSubmitted = async (entries) => {
     const book = {
       title: entries['book-title'],
       author: entries['book-author'],
@@ -31,6 +40,22 @@ export default class DetailsController {
     };
     await this.webService.editBookInRepository(this.isbn, book,
         () => { console.log('Edit book form is submitted'); },
+        console.error);
+  };
+
+  onEditBookReaderFormSubmitted = async (entries) => {
+    const reader = {
+      name: entries['book-reader-name'],
+      dueDate: entries['book-reader-date'],
+    };
+    await this.webService.editBookReaderInRepository(this.isbn, reader,
+        () => { console.log('Edit book reader form is submitted'); },
+        console.error);
+  };
+
+  onDeleteBookReaderButtonClicked = async () => {
+    await this.webService.deleteBookReaderFromRepository(this.isbn,
+        () => { console.log('Delete book reader button is clicked'); },
         console.error);
   };
 
@@ -44,10 +69,22 @@ export default class DetailsController {
       document.getElementById('book-author').innerText = bookAuthor;
       document.getElementById('book-year').innerText = bookYear;
       // document.getElementById('book-image').value = book.image;
+
       const form = this.editBookFormController.form;
       form.querySelector('input[name="book-title"]').value = bookTitle;
       form.querySelector('input[name="book-author"]').value = bookAuthor;
       form.querySelector('input[name="book-year"]').value = bookYear;
+
+      const readerForm = this.changeBookReaderFormController.form;
+      if (book.reader) {
+        readerForm.querySelector('input[name="book-reader-name"]').value =
+            book.reader.name;
+        readerForm.querySelector('input[name="book-reader-date"]').value =
+            book.reader.dueDate;
+      } else {
+        readerForm.querySelector('input[name="book-reader-name"]').value = '';
+        readerForm.querySelector('input[name="book-reader-date"]').value = '';
+      }
     };
 
     return this.webService.getBookFromRepository(this.isbn, onSuccess,
