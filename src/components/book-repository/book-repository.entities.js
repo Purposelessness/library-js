@@ -13,6 +13,10 @@ class Book {
     return Object.assign(new Book(), obj);
   }
 
+  getDueDate() {
+    return this.reader ? this.reader.dueDate : null;
+  }
+
   setReader(name, date) {
     this.reader = {
       name: name,

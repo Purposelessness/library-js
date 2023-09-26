@@ -1,6 +1,6 @@
 export {sortBooks, filterBooks, BOOK_SORT_KEYS, SORT_DIRECTIONS, FILTER_KEYS};
 
-const BOOK_SORT_KEYS = ['title', 'author', 'year'];
+const BOOK_SORT_KEYS = ['title', 'author', 'year', 'dueDate'];
 const SORT_DIRECTIONS = ['asc', 'desc'];
 
 const FILTER_KEYS = ['available', 'unavailable', 'overdue', 'non-overdue'];
@@ -19,13 +19,23 @@ function sortBooks(books, sortKey, sortDirection) {
     throw new Error(`Invalid sort direction: ${sortDirection}`);
   }
   return books.sort((a, b) => {
-    if (a[sortKey] < b[sortKey]) {
+    let aVal = sortKey === 'dueDate' ? a.getDueDate() : a[sortKey];
+    let bVal = sortKey === 'dueDate' ? b.getDueDate() : b[sortKey];
+    if (aVal === bVal) {
+      return 0;
+    }
+
+    if (aVal === null) {
+      return sortDirection === 'asc' ? 1 : -1;
+    } else if (bVal === null) {
       return sortDirection === 'asc' ? -1 : 1;
     }
-    if (a[sortKey] > b[sortKey]) {
+
+    if (aVal < bVal) {
+      return sortDirection === 'asc' ? -1 : 1;
+    } else {
       return sortDirection === 'asc' ? 1 : -1;
     }
-    return 0;
   });
 }
 

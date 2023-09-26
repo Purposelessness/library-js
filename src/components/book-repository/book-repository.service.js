@@ -73,7 +73,7 @@ class BookRepository {
       try {
         books = sortBooks(books, sortKey, sortDirection);
         console.log(
-            `[BookRepository] Books sorted by ${sortKey} in ${sortDirection} order: ${books}`);
+            `[BookRepository] Books sorted by ${sortKey} in ${sortDirection} order: ${books.toString()}`);
       } catch (err) {
         throw new Error(400, err.message);
       }
@@ -152,8 +152,7 @@ class BookRepository {
     }
 
     const book = this.data.get(isbn);
-    book.reader = reader;
-    this.data.set(isbn, book);
+    book.setReader(reader.name, reader.dueDate);
     console.log(`[BookRepository] Book reader edited: ${book.title}`);
     return book;
   };
@@ -167,8 +166,7 @@ class BookRepository {
     }
 
     const book = this.data.get(isbn);
-    book.reader = null;
-    this.data.set(isbn, book);
+    book.removeReader();
     console.log(`[BookRepository] Book reader deleted: ${book.title}`);
     return book;
   };
