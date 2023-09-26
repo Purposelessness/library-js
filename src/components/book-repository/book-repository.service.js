@@ -53,34 +53,30 @@ class BookRepository {
   getAll = (filterKey = null, sortKey = null, sortDirection = null) => {
     let books = [...this.data.values()];
 
-    if (!filterKey) {
-      return books;
-    }
-
     // Filter books
-    try {
-      books = filterBooks(books, filterKey);
-      console.log(
-          `[BookRepository] Books filtered by ${filterKey}: ${books}`);
-    } catch (err) {
-      throw new Error(400, err.message);
-    }
-
-    if (!sortKey || !sortDirection) {
-      return books;
+    if (filterKey) {
+      try {
+        books = filterBooks(books, filterKey);
+        console.log(
+            `[BookRepository] Books filtered by ${filterKey}: ${books}`);
+      } catch (err) {
+        throw new Error(400, err.message);
+      }
     }
 
     // Sort books
-    if (typeof sortKey !== 'string' || typeof sortDirection !== 'string') {
-      throw new Error(500,
-          `Sort key or sort direction is not a string: ${sortKey}, ${sortDirection}`);
-    }
-    try {
-      books = sortBooks(books, sortKey, sortDirection);
-      console.log(
-          `[BookRepository] Books sorted by ${sortKey} in ${sortDirection} order: ${books}`);
-    } catch (err) {
-      throw new Error(400, err.message);
+    if (sortKey && sortDirection) {
+      if (typeof sortKey !== 'string' || typeof sortDirection !== 'string') {
+        throw new Error(500,
+            `Sort key or sort direction is not a string: ${sortKey}, ${sortDirection}`);
+      }
+      try {
+        books = sortBooks(books, sortKey, sortDirection);
+        console.log(
+            `[BookRepository] Books sorted by ${sortKey} in ${sortDirection} order: ${books}`);
+      } catch (err) {
+        throw new Error(400, err.message);
+      }
     }
 
     return books;
