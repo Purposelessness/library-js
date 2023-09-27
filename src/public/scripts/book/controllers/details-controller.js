@@ -6,6 +6,12 @@ export default class DetailsController {
     document.getElementById('isbn').remove();
 
     this.deleteBookButton = document.getElementById('delete-book-button');
+    this.deleteBookDialog = document.getElementById('delete-book-dialog');
+    this.deleteBookConfirmButton = document.getElementById(
+        'delete-book-confirm-button');
+    this.deleteBookCancelButton = document.getElementById(
+        'delete-book-cancel-button');
+
     this.editBookFormController = new BookFormController(
         'edit', async (entries) => {
           await this.onEditBookFormSubmitted(entries);
@@ -20,17 +26,36 @@ export default class DetailsController {
           await this.onDeleteBookReaderButtonClicked();
           await this.loadDetailsAsync();
         });
+    this.deleteBookFormController = new BookFormController(
+        'delete', async () => {
+          await this.onDeleteBookButtonClicked();
+          return true;
+        });
 
-    this.deleteBookButton.addEventListener('click', async () => {
-      await webService.deleteBookFromRepository(this.isbn,
-          () => {
-            console.log('Book successfully deleted');
-            window.location.href = '/book';
-          }, console.error);
-    });
+    // this.deleteBookButton.addEventListener('click', () => {
+    //   this.deleteBookDialog.showModal();
+    // });
+    // this.deleteBookConfirmButton.addEventListener('click', async () => {
+    //   await webService.deleteBookFromRepository(this.isbn,
+    //       () => {
+    //         console.log('Book successfully deleted');
+    //         window.location.href = '/book';
+    //       }, console.error);
+    // });
+    // this.deleteBookCancelButton.addEventListener('click', () => {
+    //   this.deleteBookDialog.close();
+    // });
 
     this.webService = webService;
   }
+
+  onDeleteBookButtonClicked = async () => {
+    await this.webService.deleteBookFromRepository(this.isbn,
+        () => {
+          console.log('Book successfully deleted');
+          window.location.href = '/book';
+        }, console.error);
+  };
 
   onEditBookFormSubmitted = async (entries) => {
     const book = {

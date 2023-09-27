@@ -4,4 +4,9 @@ block content
   h1= title
   p Welcome to #{title}
 
-  a(href='/book') Books
+  p
+    a(href='/book') Books
+  button(id='save-books-button') Save books
+
+block scripts
+  script(src='/scripts/index.js' type='module')

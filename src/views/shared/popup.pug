@@ -1,5 +1,5 @@
 mixin popup(prefix, title, submitButtonText, closeButtonText='Close')
-  div(class='popup-container hidden' id=`${prefix}-popup-container`)
+  dialog(class='popup-container' id=`${prefix}-popup-container`)
     form(class='popup-form')
       if title
         label(class=`popup-form-title`)= title

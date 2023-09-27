@@ -7,6 +7,13 @@ html
     block header
   body
     block outer
+    div(class='header')
+      a(href='/')
+        i(class='fa-solid fa-house')
+        span Home
+      a(href='/book')
+        i(class='fa-solid fa-book')
+        span Books
     div(class='container')
-        block content
+      block content
     block scripts

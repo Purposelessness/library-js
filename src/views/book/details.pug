@@ -11,9 +11,12 @@ block outer
     +bookForm('edit')
   +popup('reader', 'Change reader', 'Set', 'Delete')
     +bookReaderForm('reader')
+  +popup('delete', 'Delete book', 'Delete')
+    p Are you sure you want to delete this book?
   +bottomNavigationBar()
     +showPopupButton('edit', 'Edit book')
     +showPopupButton('reader', 'Change reader')
+    +showPopupButton('delete', 'Delete book')
 
 block content
   span(id='isbn')= isbn
@@ -21,7 +24,6 @@ block content
     b(id='book-title') Title
     span(id='book-author') Author
     span(id='book-year') Year
-    button(id='delete-book-button') Delete
 
 block scripts
   script(src='/scripts/book/details.js' type='module')

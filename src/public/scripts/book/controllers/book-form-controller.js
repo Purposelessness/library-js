@@ -43,7 +43,7 @@ export default class BookFormController {
     });
 
     this.showPopupButton.addEventListener('click', () => {
-      this.popupContainer.classList.remove('hidden');
+      this.popupContainer.showModal();
     });
     this.closePopupButton.addEventListener('click', async () => {
       this.closePopup();
@@ -58,6 +58,6 @@ export default class BookFormController {
   }
 
   closePopup() {
-    this.popupContainer.classList.add('hidden');
+    this.popupContainer.close();
   }
 }
