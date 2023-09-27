@@ -32,20 +32,6 @@ export default class DetailsController {
           return true;
         });
 
-    // this.deleteBookButton.addEventListener('click', () => {
-    //   this.deleteBookDialog.showModal();
-    // });
-    // this.deleteBookConfirmButton.addEventListener('click', async () => {
-    //   await webService.deleteBookFromRepository(this.isbn,
-    //       () => {
-    //         console.log('Book successfully deleted');
-    //         window.location.href = '/book';
-    //       }, console.error);
-    // });
-    // this.deleteBookCancelButton.addEventListener('click', () => {
-    //   this.deleteBookDialog.close();
-    // });
-
     this.webService = webService;
   }
 
